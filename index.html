@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf6ee">
+  <meta name="description" content="A little cake, a lot of laughs, and a birthday surprise for Thiri.">
+  <title>Happy Birthday, Thiri! 🎂🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <div class="ambient" aria-hidden="true"><span class="balloon balloon-one"></span><span class="balloon balloon-two"></span><span class="balloon balloon-three"></span></div>
+  <header class="site-header"><a class="wordmark" href="#home" aria-label="Thiri's birthday home"><span>✧</span> a little celebration</a><span class="header-note">MADE JUST FOR THIRI <span>✧</span></span></header>
+  <main>
+    <section class="hero" id="home" aria-labelledby="birthday-heading">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> TODAY'S MAIN CHARACTER</p>
+        <h1 id="birthday-heading">Happy <br>Birthday,<br><em>Thiri!</em><span class="heading-star" aria-hidden="true">✧</span><span class="sr-only"> 🎂🎉</span></h1>
+        <p class="hero-description">A little older. A little wiser.<br>Still everyone's favorite plot twist.</p>
+        <button class="button primary" id="open-surprise">Open Your Birthday Surprise 🎁 <span aria-hidden="true">↗</span></button>
+        <p class="tiny-note">Packed with laughs. And a questionable amount of cake.</p>
+      </div>
+      <div class="cake-scene">
+        <div class="orbit" aria-hidden="true"></div><div class="cake-sparkles" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span><span>✧</span></div>
+        <span class="scene-star star-one" aria-hidden="true">✦</span><span class="scene-star star-two" aria-hidden="true">✧</span><span class="scene-star star-three" aria-hidden="true">✦</span>
+        <span class="birthday-sticker">100%<br><strong>birthday girl</strong><span>approved ✧</span></span>
+        <span class="cake-caption">make a wish, legend <span aria-hidden="true">⤵</span></span>
+        <button class="cake-button" id="cake" aria-label="Blow out the birthday cake candles">
+          <svg class="cake-svg" viewBox="0 0 520 490" role="img" aria-labelledby="cake-title">
+            <title id="cake-title">A pink and lavender two-tier birthday cake with five glowing candles</title>
+            <defs>
+              <linearGradient id="bottom" x1="0" x2="1"><stop stop-color="#a293cd"/><stop offset=".43" stop-color="#cfc0e8"/><stop offset="1" stop-color="#ac98d1"/></linearGradient>
+              <linearGradient id="top" x1="0" x2="1"><stop stop-color="#e4a2b7"/><stop offset=".45" stop-color="#ffd0d9"/><stop offset="1" stop-color="#eaa8be"/></linearGradient>
+              <linearGradient id="icing" x2="0" y2="1"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#f8e8de"/></linearGradient>
+              <linearGradient id="candle" x1="0" x2="1"><stop stop-color="#f8d991"/><stop offset=".5" stop-color="#fff0bf"/><stop offset="1" stop-color="#dcad59"/></linearGradient>
+              <radialGradient id="flame"><stop stop-color="#fffbe0"/><stop offset=".55" stop-color="#ffd374"/><stop offset="1" stop-color="#ffaf63"/></radialGradient>
+              <filter id="shadow"><feGaussianBlur stdDeviation="9"/></filter>
+            </defs>
+            <ellipse cx="260" cy="442" rx="166" ry="18" fill="#70577e" opacity=".13" filter="url(#shadow)"/>
+            <ellipse cx="260" cy="420" rx="199" ry="38" fill="#d3b778"/>
+            <ellipse cx="260" cy="413" rx="199" ry="36" fill="#f5e4b9"/>
+            <ellipse cx="260" cy="408" rx="181" ry="28" fill="#fffaed"/>
+            <path d="M98 304v91c0 48 324 48 324 0v-91Z" fill="url(#bottom)"/>
+            <ellipse cx="260" cy="304" rx="162" ry="39" fill="#e5d7f4"/>
+            <path d="M98 304c0 19 36 31 51 33v24c0 17 22 17 22 0v-17l20 4v13c0 17 22 17 22 0v-10l26 2v30c0 19 24 19 24 0v-30l32-1v11c0 17 23 17 23 0v-14l25-4v21c0 17 23 17 23 0v-27c32-8 56-18 56-35 0 50-324 50-324 0Z" fill="url(#icing)"/>
+            <path d="M145 217v76c0 39 230 39 230 0v-76Z" fill="url(#top)"/>
+            <ellipse cx="260" cy="217" rx="115" ry="29" fill="#fff2e7"/>
+            <path d="M145 217c0 13 20 22 34 24v24c0 15 19 15 19 0v-20l24 3v12c0 16 20 16 20 0v-10h28v25c0 16 20 16 20 0v-27l25-3v13c0 15 20 15 20 0v-18c23-5 40-13 40-23 0 39-230 39-230 0Z" fill="url(#icing)"/>
+            <g fill="#fff5e9" stroke="#f0d8d9" stroke-width="1"><circle cx="153" cy="297" r="10"/><circle cx="173" cy="305" r="10"/><circle cx="194" cy="311" r="10"/><circle cx="216" cy="315" r="10"/><circle cx="238" cy="317" r="10"/><circle cx="260" cy="318" r="10"/><circle cx="282" cy="317" r="10"/><circle cx="304" cy="315" r="10"/><circle cx="326" cy="311" r="10"/><circle cx="347" cy="305" r="10"/><circle cx="367" cy="297" r="10"/></g>
+            <g fill="#f3d28d"><path d="m128 363 3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z"/><path d="m390 355 3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z"/><circle cx="188" cy="389" r="3"/><circle cx="324" cy="388" r="3"/></g>
+            <g fill="#f7f0de"><circle cx="222" cy="398" r="3"/><circle cx="286" cy="398" r="3"/><circle cx="357" cy="382" r="3"/><circle cx="158" cy="380" r="3"/></g>
+            <g stroke="#dc818f" stroke-width="4" stroke-linecap="round"><path d="m187 215 6 3m30-11 5-4m46 19 6-1m35-17 5 3m22 15 5-4"/></g>
+            <g class="candles" fill="url(#candle)"><rect x="188" y="159" width="12" height="54" rx="3"/><rect x="222" y="141" width="12" height="64" rx="3"/><rect x="254" y="151" width="12" height="68" rx="3"/><rect x="287" y="139" width="12" height="66" rx="3"/><rect x="321" y="158" width="12" height="55" rx="3"/></g>
+            <g stroke="#ba8951" stroke-width="2"><path d="M194 159v-8m34-10v-8m32 18v-8m33-4v-8m34 27v-8"/></g>
+            <g class="flames" fill="url(#flame)"><path class="flame" style="--i:0" d="M194 151c-18-4-7-21 0-31 3 12 17 26 0 31Z"/><path class="flame" style="--i:1" d="M228 133c-18-4-7-21 0-31 3 12 17 26 0 31Z"/><path class="flame" style="--i:2" d="M260 143c-18-4-7-21 0-31 3 12 17 26 0 31Z"/><path class="flame" style="--i:3" d="M293 131c-18-4-7-21 0-31 3 12 17 26 0 31Z"/><path class="flame" style="--i:4" d="M327 150c-18-4-7-21 0-31 3 12 17 26 0 31Z"/></g>
+            <g class="smoke" fill="none" stroke="#b4a6b9" stroke-width="3" stroke-linecap="round"><path style="--i:0" d="M194 150q-13-14 0-25t0-23"/><path style="--i:1" d="M228 132q13-14 0-25t0-23"/><path style="--i:2" d="M260 142q-13-14 0-25t0-23"/><path style="--i:3" d="M293 130q13-14 0-25t0-23"/><path style="--i:4" d="M327 149q-13-14 0-25t0-23"/></g>
+          </svg>
+        </button>
+        <div class="cake-controls"><button class="button secondary" id="blow">Blow the Candles! 🎂</button><button class="text-button" id="relight" hidden>Relight & make another wish ↺</button><span id="cake-hint">A wish is just a little magic away.</span></div>
+      </div>
+      <a class="scroll-cue" href="#birthday-note">A LITTLE MORE BIRTHDAY MAGIC <span>↓</span></a>
+    </section>
+    <section class="surprise-section" id="birthday-note" aria-labelledby="note-title">
+      <div class="section-topline"><span>01 / A NOTE FOR THE BIRTHDAY GIRL</span><span aria-hidden="true">✧</span></div>
+      <div class="note-card"><span class="note-sparkle" aria-hidden="true">✦</span><p class="eyebrow">SOME THINGS ONLY GET BETTER WITH AGE.</p><h2 id="note-title">You. And your <em>stories.</em></h2><p class="note-intro">Today, the cake is sweet. The wishes are heartfelt.<br>The birthday message? Slightly less serious.</p><div id="surprise-content" hidden><p class="burmese" lang="my">များများဗြောင်လိမ်နိုင်ပါစေ 🤣</p><p class="english-wish">Another year older, another year of legendary stories! 😂</p><div class="dancing-gift" aria-hidden="true">🎁</div><span class="handwritten">Never change, birthday legend.</span></div><button class="text-button" id="note-open">Unwrap your birthday message <span aria-hidden="true">↗</span></button></div>
+    </section>
+  </main>
+  <footer><a class="wordmark" href="#home"><span>✧</span> a little celebration</a><span>FOR THIRI, FROM YOUR FRIEND ✧</span></footer>
+  <p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+</body>
+</html>
