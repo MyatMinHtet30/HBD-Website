@@ -150,70 +150,32 @@ if ('IntersectionObserver' in window && !motion.matches) {
   });
 }
 
-// A gentle music-box rendition, synthesized locally without audio downloads.
-const birthdayMelody = [
-  [67,.75],[67,.25],[69,1],[67,1],[72,1],[71,2],
-  [67,.75],[67,.25],[69,1],[67,1],[74,1],[72,2],
-  [67,.75],[67,.25],[79,1],[76,1],[72,1],[71,1],[69,2],
-  [77,.75],[77,.25],[76,1],[72,1],[74,1],[72,2.5]
-];
-let audioContext;
-let musicVoices = [];
-let musicEndTimer;
-let musicPlaying = false;
-let musicStarted = false;
+// A real local audio file avoids suspended Web Audio contexts on mobile.
+const birthdayAudio = $('birthday-audio');
+birthdayAudio.volume = .7;
 function updateMusicIndicator(playing) {
-  musicPlaying = playing;
-  $('music-indicator').setAttribute('aria-label', playing ? 'Happy Birthday melody playing' : 'Birthday melody');
   $('music-indicator').classList.toggle('is-playing', playing);
+  $('music-indicator').setAttribute('aria-label', playing ? 'Birthday melody playing' : 'Birthday melody ready; tap anywhere on the page to start');
 }
-function stopMusic() {
-  clearTimeout(musicEndTimer);
-  for (const voice of musicVoices) {
-    voice.oscillator.onended = null;
-    try { voice.oscillator.stop(); } catch { /* Already finished. */ }
-    voice.oscillator.disconnect();
-    voice.gain.disconnect();
-  }
-  musicVoices = [];
+function tryBirthdayMusic() {
+  if (document.hidden || !birthdayAudio.paused) return;
+  // Call play synchronously within the gesture: important for iOS/Safari.
+  const attempt = birthdayAudio.play();
+  if (attempt) attempt.catch(() => updateMusicIndicator(false));
+}
+birthdayAudio.addEventListener('playing', () => updateMusicIndicator(true));
+birthdayAudio.addEventListener('pause', () => updateMusicIndicator(false));
+birthdayAudio.addEventListener('waiting', () => updateMusicIndicator(false));
+birthdayAudio.addEventListener('error', () => {
   updateMusicIndicator(false);
+  announce('Birthday music could not load. Please refresh the page.');
+});
+// Browsers may reject audible autoplay. Retry on real click/touch/key gestures.
+for (const event of ['click', 'touchend', 'keydown']) {
+  document.addEventListener(event, tryBirthdayMusic, { passive: true });
 }
-async function tryBirthdayMusic() {
-  if (musicStarted || document.hidden) return;
-  const AudioEngine = window.AudioContext || window.webkitAudioContext;
-  if (!AudioEngine) return;
-  try {
-    audioContext ||= new AudioEngine();
-    await audioContext.resume();
-    if (document.hidden || musicStarted || audioContext.state !== 'running') return;
-    musicStarted = true;
-    const beat = .43;
-    let start = audioContext.currentTime + .06;
-    for (const [note, beats] of birthdayMelody) {
-      const duration = beats * beat;
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      oscillator.type = 'sine';
-      oscillator.frequency.value = 440 * Math.pow(2, (note + 12 - 69) / 12);
-      gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(.15, start + .012);
-      gain.gain.exponentialRampToValueAtTime(.001, start + duration + .15);
-      oscillator.connect(gain); gain.connect(audioContext.destination);
-      oscillator.start(start); oscillator.stop(start + duration + .2);
-      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
-      musicVoices.push({ oscillator, gain });
-      start += duration;
-    }
-    updateMusicIndicator(true);
-
-    musicEndTimer = setTimeout(stopMusic, (start - audioContext.currentTime + .3) * 1000);
-  } catch {
-    stopMusic();
-    musicStarted = false;
-  }
-}
-// Attempt on arrival; blocked autoplay resumes only after a real visitor gesture.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) birthdayAudio.pause();
+  else tryBirthdayMusic();
+});
 tryBirthdayMusic();
-document.addEventListener('pointerdown', tryBirthdayMusic, { passive: true });
-document.addEventListener('keydown', tryBirthdayMusic);
-document.addEventListener('visibilitychange', () => { if (document.hidden) stopMusic(); });
