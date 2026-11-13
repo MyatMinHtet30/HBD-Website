@@ -9,7 +9,7 @@ Open `index.html` in your browser. Keep `style.css` and `script.js` next to it. 
 ## Publish with GitHub Pages
 
 1. Create a GitHub repository, for example `thiri-birthday`.
-2. Upload `index.html`, `style.css`, `script.js`, and `birthday-melody.wav` to its root and commit them to `main`.
+2. Upload `index.html`, `style.css`, and `script.js` to its root and commit them to `main`.
 3. In the repository, open **Settings → Pages**.
 4. Choose **Deploy from a branch**, select **main** and **/ (root)**, then click **Save**.
 5. Once GitHub finishes deployment, open the website link shown in Pages settings, typically `https://YOUR-USERNAME.github.io/thiri-birthday/`.
@@ -21,4 +21,4 @@ Open `index.html` in your browser. Keep `style.css` and `script.js` next to it. 
 - Relight the candles to repeat the wish.
 - Keyboard navigation, live announcements, and reduced-motion preferences are supported. Reduced motion disables decorative animation and confetti while preserving every interaction.
 
-The local `birthday-melody.wav` supplies the birthday tune. Audible autoplay depends on browser permission; a first click, touch, or key press starts playback when autoplay is blocked. The header waveform follows actual playback events.
+Use the header Play birthday tune button to hear the locally synthesized melody. The waveform animates during playback; Stop birthday tune stops the music.
