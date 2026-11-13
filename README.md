@@ -4,7 +4,7 @@ A responsive, buildless birthday website with an original SVG cake, candle smoke
 
 ## Open locally
 
-Open `index.html` in your browser. Keep `style.css` and `script.js` next to it. Google Fonts supplies DM Sans, Playfair Display, and Noto Sans Myanmar when online; system fonts are used otherwise.
+Open `index.html` in your browser. Keep `style.css` and `script.js` next to it. Google Fonts supplies DM Sans, Cormorant Garamond, and Noto Serif Myanmar when online; system fonts are used otherwise.
 
 ## Publish with GitHub Pages
 
