@@ -161,12 +161,11 @@ let audioContext;
 let musicVoices = [];
 let musicEndTimer;
 let musicPlaying = false;
-function updateMusicButton(playing) {
+let musicStarted = false;
+function updateMusicIndicator(playing) {
   musicPlaying = playing;
-  $('music-toggle').setAttribute('aria-pressed', String(playing));
-  $('music-toggle').setAttribute('aria-label', playing ? 'Stop Happy Birthday music' : 'Play Happy Birthday music');
-  $('music-toggle').classList.toggle('is-playing', playing);
-  $('music-label').textContent = playing ? 'Stop birthday tune' : 'Play birthday tune';
+  $('music-indicator').setAttribute('aria-label', playing ? 'Happy Birthday melody playing' : 'Birthday melody');
+  $('music-indicator').classList.toggle('is-playing', playing);
 }
 function stopMusic() {
   clearTimeout(musicEndTimer);
@@ -177,17 +176,17 @@ function stopMusic() {
     voice.gain.disconnect();
   }
   musicVoices = [];
-  updateMusicButton(false);
+  updateMusicIndicator(false);
 }
-$('music-toggle').addEventListener('click', async () => {
-  if (musicPlaying) { stopMusic(); return; }
+async function tryBirthdayMusic() {
+  if (musicStarted || document.hidden) return;
   const AudioEngine = window.AudioContext || window.webkitAudioContext;
-  if (!AudioEngine) { announce('Birthday music is not supported in this browser.'); return; }
-  $('music-toggle').disabled = true;
+  if (!AudioEngine) return;
   try {
     audioContext ||= new AudioEngine();
     await audioContext.resume();
-    if (document.hidden) return;
+    if (document.hidden || musicStarted || audioContext.state !== 'running') return;
+    musicStarted = true;
     const beat = .43;
     let start = audioContext.currentTime + .06;
     for (const [note, beats] of birthdayMelody) {
@@ -205,12 +204,16 @@ $('music-toggle').addEventListener('click', async () => {
       musicVoices.push({ oscillator, gain });
       start += duration;
     }
-    updateMusicButton(true);
-    announce('Happy Birthday music playing. Use the music button to stop.');
+    updateMusicIndicator(true);
+
     musicEndTimer = setTimeout(stopMusic, (start - audioContext.currentTime + .3) * 1000);
   } catch {
     stopMusic();
-    announce('Music could not start. Tap the music button to try again.');
-  } finally { $('music-toggle').disabled = false; }
-});
+    musicStarted = false;
+  }
+}
+// Attempt on arrival; blocked autoplay resumes only after a real visitor gesture.
+tryBirthdayMusic();
+document.addEventListener('pointerdown', tryBirthdayMusic, { passive: true });
+document.addEventListener('keydown', tryBirthdayMusic);
 document.addEventListener('visibilitychange', () => { if (document.hidden) stopMusic(); });
