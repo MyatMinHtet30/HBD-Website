@@ -149,3 +149,68 @@ if ('IntersectionObserver' in window && !motion.matches) {
     observer.observe(section);
   });
 }
+
+// A gentle music-box rendition, synthesized locally without audio downloads.
+const birthdayMelody = [
+  [67,.75],[67,.25],[69,1],[67,1],[72,1],[71,2],
+  [67,.75],[67,.25],[69,1],[67,1],[74,1],[72,2],
+  [67,.75],[67,.25],[79,1],[76,1],[72,1],[71,1],[69,2],
+  [77,.75],[77,.25],[76,1],[72,1],[74,1],[72,2.5]
+];
+let audioContext;
+let musicVoices = [];
+let musicEndTimer;
+let musicPlaying = false;
+function updateMusicButton(playing) {
+  musicPlaying = playing;
+  $('music-toggle').setAttribute('aria-pressed', String(playing));
+  $('music-toggle').setAttribute('aria-label', playing ? 'Stop Happy Birthday music' : 'Play Happy Birthday music');
+  $('music-toggle').classList.toggle('is-playing', playing);
+  $('music-label').textContent = playing ? 'Stop birthday tune' : 'Play birthday tune';
+}
+function stopMusic() {
+  clearTimeout(musicEndTimer);
+  for (const voice of musicVoices) {
+    voice.oscillator.onended = null;
+    try { voice.oscillator.stop(); } catch { /* Already finished. */ }
+    voice.oscillator.disconnect();
+    voice.gain.disconnect();
+  }
+  musicVoices = [];
+  updateMusicButton(false);
+}
+$('music-toggle').addEventListener('click', async () => {
+  if (musicPlaying) { stopMusic(); return; }
+  const AudioEngine = window.AudioContext || window.webkitAudioContext;
+  if (!AudioEngine) { announce('Birthday music is not supported in this browser.'); return; }
+  $('music-toggle').disabled = true;
+  try {
+    audioContext ||= new AudioEngine();
+    await audioContext.resume();
+    if (document.hidden) return;
+    const beat = .43;
+    let start = audioContext.currentTime + .06;
+    for (const [note, beats] of birthdayMelody) {
+      const duration = beats * beat;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = 'sine';
+      oscillator.frequency.value = 440 * Math.pow(2, (note + 12 - 69) / 12);
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(.15, start + .012);
+      gain.gain.exponentialRampToValueAtTime(.001, start + duration + .15);
+      oscillator.connect(gain); gain.connect(audioContext.destination);
+      oscillator.start(start); oscillator.stop(start + duration + .2);
+      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+      musicVoices.push({ oscillator, gain });
+      start += duration;
+    }
+    updateMusicButton(true);
+    announce('Happy Birthday music playing. Use the music button to stop.');
+    musicEndTimer = setTimeout(stopMusic, (start - audioContext.currentTime + .3) * 1000);
+  } catch {
+    stopMusic();
+    announce('Music could not start. Tap the music button to try again.');
+  } finally { $('music-toggle').disabled = false; }
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopMusic(); });

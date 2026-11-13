@@ -7,6 +7,17 @@
 #surprise-content.revealed>.friend-wish:nth-child(3){animation-delay:.3s}
 @media(max-width:620px){.friend-wish .burmese{font-size:20px}}
 /* Celebration details: composited movement keeps the cake smooth on phones. */
+.thiri-slogan{margin:22px 0 26px;padding:3px 0 3px 16px;border-left:2px solid #d8bd83}
+.thiri-slogan>span{font-family:var(--serif);font-size:17px;font-style:italic;color:#a184a6}
+.thiri-slogan>p{font-family:'Noto Serif Myanmar','Myanmar Text',serif;font-size:clamp(17px,2vw,23px);line-height:2;margin:6px 0;color:var(--purple);overflow-wrap:anywhere}
+.music-toggle{position:fixed;right:20px;bottom:max(18px,env(safe-area-inset-bottom));z-index:10;display:flex;align-items:center;gap:10px;min-height:46px;max-width:calc(100vw - 32px);padding:11px 16px;border:1px solid #d8c9de;border-radius:30px;background:#fffcf5ed;backdrop-filter:blur(12px);color:var(--purple);font-size:11px;box-shadow:0 5px 24px #51426515}
+.music-toggle>span:first-child{font-size:22px}.music-toggle:hover{background:#f3eaf7}.music-toggle:disabled{cursor:wait}
+.music-bars{display:flex;align-items:center;gap:3px;height:17px}.music-bars i{display:block;width:3px;height:5px;border-radius:3px;background:#b995c1}
+.is-playing .music-bars i{animation:music-bounce .7s ease-in-out infinite alternate}.is-playing .music-bars i:nth-child(2){animation-delay:-.25s}.is-playing .music-bars i:nth-child(3){animation-delay:-.5s}
+@keyframes music-bounce{to{height:17px}}
+footer{padding-bottom:85px}
+@media(max-width:620px){.thiri-slogan{border-left:0;padding:12px 8px;border-top:1px solid #e7dfdf;border-bottom:1px solid #e7dfdf;max-width:300px;margin:22px auto}.music-toggle{right:12px;font-size:10px;padding:9px 13px}}
+@media(prefers-reduced-motion:reduce){.music-bars i{animation:none!important}.is-playing .music-bars i{height:12px}}
 .cake-sparkles{position:absolute;inset:12% 2% 18%;pointer-events:none}
 .cake-sparkles span{position:absolute;left:8%;top:45%;color:var(--gold);font-size:19px;opacity:0;animation:sparkle-drift 4.8s ease-in-out infinite}
 .cake-sparkles span:nth-child(2){left:85%;top:20%;animation-delay:-.8s;font-size:25px}
